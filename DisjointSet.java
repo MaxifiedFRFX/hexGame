@@ -20,7 +20,7 @@ public class DisjointSet  {
 	
 	private int[] set;
 	
-	public DisjointSet(int length) {
+	public DisjointSet(int length) { //test comment
 		set = new int[length];
 		makeSet(length);
 	}
