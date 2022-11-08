@@ -76,7 +76,7 @@ public class HexGameEngine implements HexGameLogic {
         	cells[index].setPlayer(Player.Red);
         }
         setUnion(index);
-        System.out.println("find: " + set.find(index));
+        set.print();
         turn++;
     }
     
@@ -85,20 +85,20 @@ public class HexGameEngine implements HexGameLogic {
     			&& cells[index].getPlayer() == cells[index - 11].getPlayer()) {
     		set.union(index, index - 11);
     	}
-    	if (contains(right, index)
+    	if (!contains(right, index)
     			&& index > 10 
     			&& cells[index].getPlayer() == cells[index - 10].getPlayer()) {
     		set.union(index, index - 10);
     	}
-    	if (contains(left, index) 
+    	if (!contains(left, index) 
     			&& cells[index].getPlayer() == cells[index - 1].getPlayer()) {
     		set.union(index, index - 1);
     	}
-    	if (contains(right, index) 
+    	if (!contains(right, index) 
     			&& cells[index].getPlayer() == cells[index + 1].getPlayer()) {
     		set.union(index, index + 1);
     	}
-    	if (contains(left, index) 
+    	if (!contains(left, index) 
     			&& index < 110 
     			&& cells[index].getPlayer() == cells[index + 10].getPlayer()) {
     		set.union(index, index + 10);

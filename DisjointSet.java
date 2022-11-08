@@ -42,9 +42,20 @@ public class DisjointSet  {
 	public void union(int i1, int i2) {
 		int p1 = find(i1),
 			p2 = find(i2);
+		System.out.println(p1);
+		System.out.println(p2);
 		set[p1] = p2;
-		System.out.println(set);
 	}
+	
+	public void print() {
+		System.out.print("[");
+		int i = 0;
+    	for (int value: set) {
+    		System.out.print(i + ": " + value + ", ");
+    		i++;
+    	}
+    	System.out.println("]");
+    }
 	
 }
 
