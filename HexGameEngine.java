@@ -14,7 +14,9 @@ public class HexGameEngine implements HexGameLogic {
 	private int rows;
 	private HexCell[] cells = new HexCell[125];
 	private String status = "";
-	private DisjointSet setBlue, setRed;
+	private DisjointSet set;
+	private int[] left = {0, 11, 22, 33, 44, 55, 66, 77, 88, 99, 110};
+	private int[] right = {0, 11, 22, 33, 44, 55, 66, 77, 88, 99, 110};
     
     /** 
      * The constructor sets the blue player to start and ensures the
@@ -29,16 +31,7 @@ public class HexGameEngine implements HexGameLogic {
         turn = 0;
         status = "playing";
         this.rows = rows;
-        setBlue = new DisjointSet(rows * rows - 1 + 5);
-        setRed = new DisjointSet(rows * rows - 1 + 5);
-        for (int i = 0; i <= 10; i++) {
-        	setRed.union(i, (rows * rows - 1 + 3));
-        	System.out.println("root: " + setRed.find(i));
-        }
-        /*for (int i = (rows * rows) - rows; i < rows * rows; i++) {
-        	setRed.union((rows * rows - 1 + 4), i);
-        	System.out.println("root: " + setRed.find());
-        }*/
+        set = new DisjointSet(rows * rows - 1 + 5);
     }
     
 
@@ -76,25 +69,53 @@ public class HexGameEngine implements HexGameLogic {
      */
     @Override
     public void move(int index) {
-        // Add your code
-        System.out.println("Cell #" + index + " selected");
         if (turn % 2 == 0) {
         	cells[index].setPlayer(Player.Blue);
         }
         else {
         	cells[index].setPlayer(Player.Red);
         }
-        //setUnion(index);
+        setUnion(index);
+        System.out.println("find: " + set.find(index));
         turn++;
     }
     
     public void setUnion(int index) { 
-    	if (cells[index].getPlayer() == Player.Red) {
-    		
+    	if (index > 10 
+    			&& cells[index].getPlayer() == cells[index - 11].getPlayer()) {
+    		set.union(index, index - 11);
     	}
-    	if (cells[index].getPlayer() == cells[index - 1].getPlayer()) {
-    		cells[index] = null;
+    	if (contains(right, index)
+    			&& index > 10 
+    			&& cells[index].getPlayer() == cells[index - 10].getPlayer()) {
+    		set.union(index, index - 10);
     	}
+    	if (contains(left, index) 
+    			&& cells[index].getPlayer() == cells[index - 1].getPlayer()) {
+    		set.union(index, index - 1);
+    	}
+    	if (contains(right, index) 
+    			&& cells[index].getPlayer() == cells[index + 1].getPlayer()) {
+    		set.union(index, index + 1);
+    	}
+    	if (contains(left, index) 
+    			&& index < 110 
+    			&& cells[index].getPlayer() == cells[index + 10].getPlayer()) {
+    		set.union(index, index + 10);
+    	}
+    	if (index < 110  
+    			&& cells[index].getPlayer() == cells[index + 11].getPlayer()) {
+    		set.union(index, index + 11);
+    	}
+    }
+    
+    public boolean contains(int[] array, int num) {
+    	for (int value: array) {
+    		if (value == num) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     /**

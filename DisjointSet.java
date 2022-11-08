@@ -32,7 +32,6 @@ public class DisjointSet  {
 	}
 	
 	public int find(int index) {
-		System.out.println("index: " + index);
 		if (set[index] == index) {
 			return index;
 		}
@@ -44,6 +43,7 @@ public class DisjointSet  {
 		int p1 = find(i1),
 			p2 = find(i2);
 		set[p1] = p2;
+		System.out.println(set);
 	}
 	
 }
