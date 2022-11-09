@@ -19,10 +19,12 @@ public class DisjointSet  {
     //    board for a new game).
 	
 	private int[] set;
+	private int eqClasses;
 	
 	public DisjointSet(int length) { //test comment
 		set = new int[length];
 		makeSet(length);
+		eqClasses = length + 1;
 	}
 	
 	public void makeSet(int length) {
@@ -42,16 +44,20 @@ public class DisjointSet  {
 	public void union(int i1, int i2) {
 		int p1 = find(i1),
 			p2 = find(i2);
-		System.out.println(p1);
-		System.out.println(p2);
+		if (set[p1] != p2) {
+			eqClasses--;
+		}
 		set[p1] = p2;
+		System.out.println(eqClasses);
 	}
 	
 	public void print() {
 		System.out.print("[");
 		int i = 0;
     	for (int value: set) {
-    		System.out.print(i + ": " + value + ", ");
+    		if (i != value) {
+    			System.out.print(i + ": " + find(value) + ", ");
+    		}
     		i++;
     	}
     	System.out.println("]");

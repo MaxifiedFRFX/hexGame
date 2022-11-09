@@ -1,4 +1,5 @@
 package hexGame;
+import java.util.Random;
 
 /** 
  * The Hex game engine enforces the Hex game rules ensuring that
@@ -15,8 +16,9 @@ public class HexGameEngine implements HexGameLogic {
 	private HexCell[] cells = new HexCell[125];
 	private String status = "";
 	private DisjointSet set;
-	private int[] left = {11, 22, 33, 44, 55, 66, 77, 88, 99};
-	private int[] right = {21, 32, 43, 54, 65, 76, 87, 98, 109};
+	private int[] left = {0, 11, 22, 33, 44, 55, 66, 77, 88, 99};
+	private int[] right = {21, 32, 43, 54, 65, 76, 87, 98, 109, 120};
+	Random rand = new Random();
     
     /** 
      * The constructor sets the blue player to start and ensures the
@@ -32,11 +34,11 @@ public class HexGameEngine implements HexGameLogic {
         status = "playing";
         this.rows = rows;
         set = new DisjointSet(rows * rows - 1 + 5);
-        //cells[121].setPlayer(Player.Blue); // Left border (blue) is 121
-        //cells[122].setPlayer(Player.Red); // Top border (red) is 122
-        //cells[123].setPlayer(Player.Blue); // Right border (blue) is 123
-        //cells[124].setPlayer(Player.Red); // Bottom border (red) is 124
-        
+        /*cells[121].setPlayer(Player.Blue); // Left border (blue) is 121
+        cells[122].setPlayer(Player.Red); // Top border (red) is 122
+        cells[123].setPlayer(Player.Blue); // Right border (blue) is 123
+        cells[124].setPlayer(Player.Red); // Bottom border (red) is 124
+        */
     }
     
 
@@ -86,14 +88,14 @@ public class HexGameEngine implements HexGameLogic {
         else {
         	cells[index].setPlayer(Player.Red);
         }
+        turn++;
         setUnion(index);
         set.print();
-        turn++;
     }
     
     public void setUnion(int index) { 
     	// Corner cases (0, 10, 110, 120)
-    	if (index == 0) {
+    	/*if (index == 0) {
     		if (cells[index].getPlayer() == cells[121].getPlayer()) {set.union(index, 121);}
     		if (cells[index].getPlayer() == cells[122].getPlayer()) {set.union(index, 122);}
     		if (cells[index].getPlayer() == cells[1].getPlayer()) {set.union(index, 1);}
@@ -163,36 +165,56 @@ public class HexGameEngine implements HexGameLogic {
     		if (cells[index].getPlayer() == cells[index+1].getPlayer()) {set.union(index, index+1);}
     		if (cells[index].getPlayer() == cells[index+10].getPlayer()) {set.union(index, index+10);}
     		if (cells[index].getPlayer() == cells[index+11].getPlayer()) {set.union(index, index+11);}
-    	}
+    	}*/
     	
-    	
-    	/*
-    	if (index > 10 
-    			&& cells[index].getPlayer() == cells[index - 11].getPlayer()) {
-    		set.union(index, index - 11);
-    	}
-    	if (!contains(right, index)
-    			&& index > 10 
-    			&& cells[index].getPlayer() == cells[index - 10].getPlayer()) {
-    		set.union(index, index - 10);
-    	}
-    	if (!contains(left, index) 
-    			&& cells[index].getPlayer() == cells[index - 1].getPlayer()) {
-    		set.union(index, index - 1);
-    	}
-    	if (!contains(right, index) 
-    			&& cells[index].getPlayer() == cells[index + 1].getPlayer()) {
-    		set.union(index, index + 1);
-    	}
+    	if (index < 110  
+    			&& cells[index].getPlayer() == cells[index + 11].getPlayer()) {
+    		set.union(set.find(index + 11), index);
+    	} 
     	if (!contains(left, index) 
     			&& index < 110 
     			&& cells[index].getPlayer() == cells[index + 10].getPlayer()) {
-    		set.union(index, index + 10);
+    		set.union(set.find(index + 10), index);
+    	} 
+    	if (!contains(right, index) 
+    			&& cells[index].getPlayer() == cells[index + 1].getPlayer()) {
+    		set.union(set.find(index + 1), index);
+    	} 
+    	if (!contains(left, index) 
+    			&& cells[index].getPlayer() == cells[index - 1].getPlayer()) {
+    		set.union(set.find(index - 1), index);
+    	} 
+    	if (!contains(right, index)
+    			&& index > 10 
+    			&& cells[index].getPlayer() == cells[index - 10].getPlayer()) {
+    		set.union(set.find(index - 10), index);
+    	} 
+    	if (index > 10 
+    			&& cells[index].getPlayer() == cells[index - 11].getPlayer()) {
+    		set.union(set.find(index - 11), index);
     	}
-    	if (index < 110  
-    			&& cells[index].getPlayer() == cells[index + 11].getPlayer()) {
-    		set.union(index, index + 11);
-    	}*/
+    	if (contains(left, index)
+    			&& cells[index].getPlayer() == Player.Blue) {
+    		set.union(set.find(121), index);
+    	}
+    	if (index <= 10
+    			&& cells[index].getPlayer() == Player.Red) {
+    		set.union(set.find(122), index);
+    	}
+    	if (contains(right, index)
+    			&& cells[index].getPlayer() == Player.Blue) {
+    		set.union(set.find(123), index);
+    	}
+    	if (index >= 110 && index <= 120
+    			&& cells[index].getPlayer() == Player.Red) {
+    		set.union(set.find(124), index);
+    	}
+    	
+    	
+    	
+    	
+    	
+    	
     }
     
     public boolean contains(int[] array, int num) {
@@ -210,7 +232,11 @@ public class HexGameEngine implements HexGameLogic {
      */
     @Override
     public void randomMove() {
-        // Add your code
+    	int num = rand.nextInt(121);
+    	while (cells[num].getPlayer() != Player.None) {
+    		num = rand.nextInt(121);
+    	}
+    	move(num);
     }
 
     /**
@@ -220,7 +246,9 @@ public class HexGameEngine implements HexGameLogic {
      */
     @Override
     public void randomMove(int n) {
-        // Add your code
+        for (int i = 0; i <= n; i++) {
+        	randomMove();
+        }
     }
 
     /**
