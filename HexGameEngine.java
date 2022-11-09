@@ -16,8 +16,8 @@ public class HexGameEngine implements HexGameLogic {
 	private HexCell[] cells = new HexCell[125];
 	private String status = "";
 	private DisjointSet set;
-	private int[] left = {0, 11, 22, 33, 44, 55, 66, 77, 88, 99};
-	private int[] right = {21, 32, 43, 54, 65, 76, 87, 98, 109, 120};
+	private int[] left = {0, 11, 22, 33, 44, 55, 66, 77, 88, 99, 110};
+	private int[] right = {10, 21, 32, 43, 54, 65, 76, 87, 98, 109, 120};
 	Random rand = new Random();
     
     /** 
@@ -31,7 +31,6 @@ public class HexGameEngine implements HexGameLogic {
      */
     public HexGameEngine(int rows) {
         turn = 0;
-        status = "playing";
         this.rows = rows;
         set = new DisjointSet(rows * rows - 1 + 5);
         /*cells[121].setPlayer(Player.Blue); // Left border (blue) is 121
@@ -69,6 +68,9 @@ public class HexGameEngine implements HexGameLogic {
      */
     @Override
     public Player currentPlayer() {
+    	if (getWinner() != Player.None) {
+    		return Player.None;
+    	}
         return (turn % 2 == 0) ? Player.Blue : Player.Red ;
     }
     
@@ -233,10 +235,13 @@ public class HexGameEngine implements HexGameLogic {
     @Override
     public void randomMove() {
     	int num = rand.nextInt(121);
-    	while (cells[num].getPlayer() != Player.None) {
+    	while (cells[num].getPlayer() != Player.None 
+    			&& getWinner() == Player.None) {
     		num = rand.nextInt(121);
     	}
-    	move(num);
+    	if (getWinner() == Player.None) {
+    		cells[num].move();
+    	}
     }
 
     /**
@@ -277,7 +282,13 @@ public class HexGameEngine implements HexGameLogic {
      */
     @Override
     public void reset() {
-        // Add your code
+    	for (int i = 0; i < (rows * rows); i++) {
+    		System.out.println(i);
+        	cells[i].setPlayer(Player.None);
+        }
+    	turn = 0;
+    	set.reset();
+        
     }
 
 }

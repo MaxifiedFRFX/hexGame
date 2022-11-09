@@ -344,9 +344,9 @@ public class HexGame {
                         // Do not uncomment the following util you 
                         // you are sure everything is working; otherwise,
                         // may get into an infinite loop.
-//                        while (engine.getWinner() == Player.None) {
-//                            engine.randomMove();
-//                        }
+                        while (engine.getWinner() == Player.None) {
+                            engine.randomMove();
+                        }
                         break;
                     case 27: // Ecsape key
                         clearBoard();

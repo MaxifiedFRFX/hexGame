@@ -24,7 +24,7 @@ public class DisjointSet  {
 	public DisjointSet(int length) { //test comment
 		set = new int[length];
 		makeSet(length);
-		eqClasses = length + 1;
+		eqClasses = length;
 	}
 	
 	public void makeSet(int length) {
@@ -46,18 +46,26 @@ public class DisjointSet  {
 			p2 = find(i2);
 		if (set[p1] != p2) {
 			eqClasses--;
+			set[p1] = p2;
 		}
-		set[p1] = p2;
-		System.out.println(eqClasses);
+		System.out.println("eqClasses: " + eqClasses + ", p1: " + p1 + ", p2: " + p2 );
+	}
+	
+	public int getClasses() {
+		return eqClasses;
+	}
+	
+	public void reset() {
+		makeSet(set.length);
 	}
 	
 	public void print() {
 		System.out.print("[");
 		int i = 0;
     	for (int value: set) {
-    		if (i != value) {
+    		//if (i != value) {
     			System.out.print(i + ": " + find(value) + ", ");
-    		}
+    		//}
     		i++;
     	}
     	System.out.println("]");
