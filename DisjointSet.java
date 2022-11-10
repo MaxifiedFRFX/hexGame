@@ -1,3 +1,10 @@
+/* Name: Samuel Rivera, Jonathan Stover
+   Assignment number: 5
+   Assignment: C++ Vectors
+   File name: DisjointSet.java
+   Date last modified: November 9, 2022
+   Honor statement: We have neither given nor received any unauthorized help on this assignment.*/
+
 package hexGame;
 
 /**
@@ -48,7 +55,6 @@ public class DisjointSet  {
 			eqClasses--;
 			set[p1] = p2;
 		}
-		System.out.println("eqClasses: " + eqClasses + ", p1: " + p1 + ", p2: " + p2 );
 	}
 	
 	public int getClasses() {
@@ -58,18 +64,4 @@ public class DisjointSet  {
 	public void reset() {
 		makeSet(set.length);
 	}
-	
-	public void print() {
-		System.out.print("[");
-		int i = 0;
-    	for (int value: set) {
-    		//if (i != value) {
-    			System.out.print(i + ": " + find(value) + ", ");
-    		//}
-    		i++;
-    	}
-    	System.out.println("]");
-    }
-	
 }
-

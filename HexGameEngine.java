@@ -1,3 +1,10 @@
+/* Name: Samuel Rivera, Jonathan Stover
+   Assignment number: 5
+   Assignment: C++ Vectors
+   File name: HexGameEngine.java
+   Date last modified: November 9, 2022
+   Honor statement: We have neither given nor received any unauthorized help on this assignment.*/
+
 package hexGame;
 import java.util.Random;
 
@@ -10,7 +17,6 @@ import java.util.Random;
  */
 
 public class HexGameEngine implements HexGameLogic {
-	
 	private int turn;
 	private int rows;
 	private HexCell[] cells = new HexCell[125];
@@ -92,83 +98,9 @@ public class HexGameEngine implements HexGameLogic {
         }
         turn++;
         setUnion(index);
-        set.print();
     }
     
-    public void setUnion(int index) { 
-    	// Corner cases (0, 10, 110, 120)
-    	/*if (index == 0) {
-    		if (cells[index].getPlayer() == cells[121].getPlayer()) {set.union(index, 121);}
-    		if (cells[index].getPlayer() == cells[122].getPlayer()) {set.union(index, 122);}
-    		if (cells[index].getPlayer() == cells[1].getPlayer()) {set.union(index, 1);}
-    		if (cells[index].getPlayer() == cells[11].getPlayer()) {set.union(index, 11);}
-    	}
-    	else if (index == 10) {
-    		if (cells[index].getPlayer() == cells[122].getPlayer()) {set.union(index, 122);}
-    		if (cells[index].getPlayer() == cells[123].getPlayer()) {set.union(index, 123);}
-    		if (cells[index].getPlayer() == cells[9].getPlayer()) {set.union(index, 9);}
-    		if (cells[index].getPlayer() == cells[20].getPlayer()) {set.union(index, 20);}
-    		if (cells[index].getPlayer() == cells[21].getPlayer()) {set.union(index, 21);}
-    	}
-    	else if (index == 110) {
-    		if (cells[index].getPlayer() == cells[121].getPlayer()) {set.union(index, 121);}
-    		if (cells[index].getPlayer() == cells[124].getPlayer()) {set.union(index, 124);}
-    		if (cells[index].getPlayer() == cells[99].getPlayer()) {set.union(index, 99);}
-    		if (cells[index].getPlayer() == cells[100].getPlayer()) {set.union(index, 100);}
-    		if (cells[index].getPlayer() == cells[111].getPlayer()) {set.union(index, 111);}
-    	}
-    	else if (index == 120) {
-    		if (cells[index].getPlayer() == cells[123].getPlayer()) {set.union(index, 123);}
-    		if (cells[index].getPlayer() == cells[124].getPlayer()) {set.union(index, 124);}
-    		if (cells[index].getPlayer() == cells[109].getPlayer()) {set.union(index, 109);}
-    		if (cells[index].getPlayer() == cells[119].getPlayer()) {set.union(index, 119);}
-    	}
-    	
-    	// Cases if index is on the left row (see "left" array)
-    	if (contains(left, index)) {
-    		if (cells[index].getPlayer() == cells[121].getPlayer()) {set.union(index, 121);}
-    		if (cells[index].getPlayer() == cells[index-11].getPlayer()) {set.union(index, index-11);}
-    		if (cells[index].getPlayer() == cells[index-10].getPlayer()) {set.union(index, index-10);}
-    		if (cells[index].getPlayer() == cells[index+1].getPlayer()) {set.union(index, index+1);}
-    		if (cells[index].getPlayer() == cells[index+11].getPlayer()) {set.union(index, index+11);}
-    	}
-    	
-    	// Cases if index is on the top row (1 - 9)
-    	else if (index < 10 && index > 0) {
-    		if (cells[index].getPlayer() == cells[122].getPlayer()) {set.union(index, 122);}
-    		if (cells[index].getPlayer() == cells[index-1].getPlayer()) {set.union(index, index-1);}
-    		if (cells[index].getPlayer() == cells[index+10].getPlayer()) {set.union(index, index+10);}
-    		if (cells[index].getPlayer() == cells[index+1].getPlayer()) {set.union(index, index+1);}
-    		if (cells[index].getPlayer() == cells[index+11].getPlayer()) {set.union(index, index+11);}
-    	}
-    	
-    	// Cases if index is on the right row (see "right" array)
-    	else if (contains(right, index)) {
-    		if (cells[index].getPlayer() == cells[123].getPlayer()) {set.union(index, 123);}
-    		if (cells[index].getPlayer() == cells[index-11].getPlayer()) {set.union(index, index-11);}
-    		if (cells[index].getPlayer() == cells[index-1].getPlayer()) {set.union(index, index-1);}
-    		if (cells[index].getPlayer() == cells[index+10].getPlayer()) {set.union(index, index+11);}
-    		if (cells[index].getPlayer() == cells[index+11].getPlayer()) {set.union(index, index+11);}
-    	}
-    	
-    	// Cases if index is on the bottom row (111 - 119)
-    	else if (index < 120 && index > 110) {
-    		if (cells[index].getPlayer() == cells[124].getPlayer()) {set.union(index, 124);}
-    		if (cells[index].getPlayer() == cells[index-1].getPlayer()) {set.union(index, index-1);}
-    		if (cells[index].getPlayer() == cells[index-11].getPlayer()) {set.union(index, index-11);}
-    		if (cells[index].getPlayer() == cells[index-10].getPlayer()) {set.union(index, index-10);}
-    		if (cells[index].getPlayer() == cells[index+1].getPlayer()) {set.union(index, index+1);}
-    	}
-    	
-    	else {
-    		if (cells[index].getPlayer() == cells[index-11].getPlayer()) {set.union(index, index-11);}
-    		if (cells[index].getPlayer() == cells[index-10].getPlayer()) {set.union(index, index-10);}
-    		if (cells[index].getPlayer() == cells[index-1].getPlayer()) {set.union(index, index-1);}
-    		if (cells[index].getPlayer() == cells[index+1].getPlayer()) {set.union(index, index+1);}
-    		if (cells[index].getPlayer() == cells[index+10].getPlayer()) {set.union(index, index+10);}
-    		if (cells[index].getPlayer() == cells[index+11].getPlayer()) {set.union(index, index+11);}
-    	}*/
-    	
+    public void setUnion(int index) {
     	if (index < 110  
     			&& cells[index].getPlayer() == cells[index + 11].getPlayer()) {
     		set.union(set.find(index + 11), index);
@@ -211,12 +143,6 @@ public class HexGameEngine implements HexGameLogic {
     			&& cells[index].getPlayer() == Player.Red) {
     		set.union(set.find(124), index);
     	}
-    	
-    	
-    	
-    	
-    	
-    	
     }
     
     public boolean contains(int[] array, int num) {
