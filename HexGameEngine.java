@@ -209,7 +209,6 @@ public class HexGameEngine implements HexGameLogic {
     @Override
     public void reset() {
     	for (int i = 0; i < (rows * rows); i++) {
-    		System.out.println(i);
         	cells[i].setPlayer(Player.None);
         }
     	turn = 0;
